@@ -166,6 +166,13 @@ def summarize(path: Path) -> dict:
             output_tokens = int(record.get("output_tokens") or 0)
             cache_read = int(record.get("cache_read_tokens") or 0)
             cache_write = int(record.get("cache_write_tokens") or 0)
+            if (
+                input_tokens == 0
+                and output_tokens == 0
+                and cache_read == 0
+                and cache_write == 0
+            ):
+                continue
             fresh = fresh_tokens(input_tokens, cache_read, cache_write)
 
             totals["input_tokens"] += input_tokens
