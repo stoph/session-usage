@@ -1,0 +1,16 @@
+{
+  "name": "session-usage",
+  "owner": {
+    "name": "Christoph"
+  },
+  "metadata": {
+    "description": "Per-project agent usage logging and reports"
+  },
+  "plugins": [
+    {
+      "name": "session-usage",
+      "source": "./claude-code",
+      "description": "Claude Code plugin: project usage hooks + session-usage skill"
+    }
+  ]
+}

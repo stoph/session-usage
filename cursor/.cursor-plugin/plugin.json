@@ -1,0 +1,9 @@
+{
+  "name": "session-usage",
+  "version": "1.0.0",
+  "description": "Log Cursor agent token usage per project and open HTML usage reports.",
+  "author": {
+    "name": "Christoph"
+  },
+  "keywords": ["usage", "tokens", "hooks", "report"]
+}
