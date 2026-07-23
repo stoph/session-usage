@@ -1,38 +1,8 @@
 # session-usage (Cursor)
 
-Cursor plugin: log agent token usage into the open project and open HTML reports via `/session-usage`.
+Log agent token usage into the open project and open HTML reports via `/session-usage`.
 
-## Install
-
-Cursor has no personal “import this git repo as a marketplace” for individual accounts. Use a local plugin, or a Team Marketplace if you are on Teams/Enterprise. Public listing is a separate review process.
-
-### Individuals (local plugin)
-
-Documented Cursor path for loading a plugin that is not on the public Marketplace:
-
-```bash
-mkdir -p ~/.cursor/plugins/local
-rm -rf ~/.cursor/plugins/local/session-usage
-cp -R /path/to/session-usage/cursor ~/.cursor/plugins/local/session-usage
-```
-
-Cursor rejects symlinks whose target is outside `~/.cursor/plugins/local/`. Use a real copy.
-
-Fully quit and reopen Cursor (or Developer: Reload Window). Check **Customize**, run an agent turn, confirm `<project>/.cursor/usage-logs/`, then `/session-usage`.
-
-Updates: `git pull` in the clone, re-copy `cursor/` into `~/.cursor/plugins/local/session-usage`, then reload.
-
-To publish for anyone: [cursor.com/marketplace/publish](https://cursor.com/marketplace/publish).
-
-### Teams / Enterprise (Team Marketplace)
-
-Requires Teams or Enterprise.
-
-1. Push this repository to GitHub.
-2. **Dashboard → Plugins → Team Marketplaces → Add Marketplace → Import from Repo**.
-3. Add the `session-usage` plugin (source directory: `cursor/`, via the repo’s `.cursor-plugin/marketplace.json`).
-4. Install from **Customize**.
-5. Optional: **Auto Refresh** (Cursor GitHub App) or manual **Refresh** after pushes.
+**Install:** see the [root README](../README.md#cursor-install).
 
 ## What you get
 
@@ -40,16 +10,21 @@ Requires Teams or Enterprise.
 - Auto-refresh of `report.html` on each agent turn
 - Skill `/session-usage` to open/refresh the project report
 
-No workspace root → nothing is logged. No `~/.cursor` log fallback.
+Logging requires a workspace root. Logs stay under that project’s `.cursor/usage-logs/`.
 
-## Migrate from the old hook install
+## Scripts
 
-If `~/.cursor/hooks.json` still lists `./hooks/log-usage.py`, remove those usage entries (keep unrelated hooks). Otherwise every turn is logged twice.
-
-You can delete obsolete copies under `~/.cursor/hooks/log-usage.py` and `~/.cursor/skills/session-usage/` after the plugin is working.
-
-## Manual report
+From this `cursor/` directory (or the installed plugin copy):
 
 ```bash
+# Project HTML report (also used by /session-usage)
 python3 scripts/project-report.py --open /path/to/project
+
+# Plaintext session list / report (CLI / CI)
+python3 scripts/report-usage.py --project /path/to/project
+python3 scripts/report-usage.py --project /path/to/project --latest
+python3 scripts/report-usage.py --project /path/to/project <session_id>
 ```
+
+`project-report.py` writes `report.html` and `report-data.json`.  
+`report-usage.py` lists sessions and prints a text report from project JSONL (optional `--rebuild`).

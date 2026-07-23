@@ -1,86 +1,58 @@
-# session-usage
+# Session Usage
 
 Per-project agent usage logging and reports.
 
-This repository contains **two independent packages**:
+Two independent packages (no shared runtime or log pipeline):
 
-| Path | Product | Install if you use… |
+| Path | Product | Log dir |
 | --- | --- | --- |
-| [`cursor/`](cursor/) | Cursor plugin | Cursor |
-| [`claude-code/`](claude-code/) | Claude Code plugin | Claude Code |
+| [`cursor/`](cursor/) | Cursor plugin | `<project>/.cursor/usage-logs/` |
+| [`claude-code/`](claude-code/) | Claude Code plugin | `<project>/.claude/usage-logs/` |
 
-Install one or both. They do not share runtime, config, or log pipelines.
-
-| | Cursor | Claude Code |
-| --- | --- | --- |
-| Log dir | `<project>/.cursor/usage-logs/` | `<project>/.claude/usage-logs/` |
+Install one or both.
 
 ## Cursor install
 
-Cursor does **not** give individual accounts a “add this git repo as a marketplace” path. That exists only for Teams/Enterprise. Individuals use a local plugin (documented by Cursor), or submit to the public Marketplace.
+Individuals have no personal “import this git repo as a marketplace” path. Use a local plugin, Teams/Enterprise marketplace, or the [public Marketplace](https://cursor.com/marketplace/publish).
 
 ### Individuals (local plugin)
 
-This is the supported way to run a plugin that is not on the public Cursor Marketplace.
-
 ```bash
 git clone https://github.com/stoph/session-usage.git
-# or use an existing checkout
 mkdir -p ~/.cursor/plugins/local
 rm -rf ~/.cursor/plugins/local/session-usage
 cp -R /path/to/session-usage/cursor ~/.cursor/plugins/local/session-usage
 ```
 
-Cursor rejects symlinks whose target is outside `~/.cursor/plugins/local/`. Use a real copy.
+Fully quit and reopen Cursor (or Developer: Reload Window). Confirm under **Customize**, run an agent turn, then `/session-usage`.
 
-1. Fully quit and reopen Cursor (or Developer: Reload Window).
-2. Confirm the plugin appears under **Customize**.
-3. Run an agent turn in a project → `<project>/.cursor/usage-logs/`.
-4. `/session-usage` to open the report.
+Updates: `git pull`, re-copy `cursor/` into `~/.cursor/plugins/local/session-usage`, reload.
 
-Updates: `git pull` in the clone, then re-copy `cursor/` into `~/.cursor/plugins/local/session-usage` and reload Cursor.
+### Teams / Enterprise
 
-Public distribution for strangers: [cursor.com/marketplace/publish](https://cursor.com/marketplace/publish) (manual review).
+1. **Dashboard → Plugins → Team Marketplaces → Add Marketplace → Import from Repo**
+2. Add `session-usage` (source: `cursor/`)
+3. Install from **Customize**
+4. Optional: **Auto Refresh** (Cursor GitHub App) or manual **Refresh** after pushes
 
-### Teams / Enterprise (Team Marketplace)
-
-Requires a Cursor Teams or Enterprise plan.
-
-1. Push this repo to GitHub.
-2. **Dashboard → Plugins → Team Marketplaces → Add Marketplace → Import from Repo**.
-3. Import the repo; add the `session-usage` plugin (source: `cursor/`).
-4. Teammates install from **Customize**.
-5. Optional: enable **Auto Refresh** (Cursor GitHub App on the repo), or click **Refresh** after pushes.
-
-Details: [cursor/README.md](cursor/README.md).
+Package details: [cursor/README.md](cursor/README.md).
 
 ## Claude Code install
 
-Individuals can add this repo as a marketplace. No Anthropic community/official listing required.
-
-### Marketplace from this repo (recommended)
+This repo is its own marketplace (not Anthropic official/community catalogs).
 
 ```bash
-# from GitHub
 claude plugin marketplace add stoph/session-usage
 claude plugin install session-usage@session-usage
-
-# or from a local checkout
-claude plugin marketplace add /path/to/session-usage
-claude plugin install session-usage@session-usage
 ```
 
-Then `/reload-plugins` or a new session. Updates: `claude plugin update session-usage`.
+Or from a local checkout: `claude plugin marketplace add /path/to/session-usage`, then the same install command.
 
-### Local skills-dir (dev)
+`/reload-plugins` or a new session. Updates: `claude plugin update session-usage`.
 
-```bash
-ln -sfn /path/to/session-usage/claude-code ~/.claude/skills/session-usage
-```
+Dev alternative: `ln -sfn /path/to/session-usage/claude-code ~/.claude/skills/session-usage`.
 
-New session or `/reload-plugins`. Updates: `git pull` in the clone.
-
-Details: [claude-code/README.md](claude-code/README.md).
+Package details: [claude-code/README.md](claude-code/README.md).
 
 ## Spec
 

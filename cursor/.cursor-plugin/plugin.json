@@ -1,5 +1,6 @@
 {
   "name": "session-usage",
+  "displayName": "Session Usage",
   "version": "1.0.0",
   "description": "Log Cursor agent token usage per project and open HTML usage reports.",
   "author": {
@@ -7,5 +8,6 @@
   },
   "license": "MIT",
   "repository": "https://github.com/stoph/session-usage",
+  "logo": "assets/logo.svg",
   "keywords": ["usage", "tokens", "hooks", "report"]
 }

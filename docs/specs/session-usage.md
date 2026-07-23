@@ -18,7 +18,7 @@ One git repository. Two distributables. Install only what you use.
 - Cursor logs: `<workspace>/.cursor/usage-logs/`
 - Claude Code logs: `<project>/.claude/usage-logs/`
 - No project/workspace root → do not log.
-- No user-home fallback directory for session JSONL.
+- Session JSONL is written only under the project log dir above.
 - Report HTML is self-contained (embedded JSON). Sidecar `report-data.json` is optional for scripts.
 
 ## Cursor package (`cursor/`)
@@ -26,12 +26,10 @@ One git repository. Two distributables. Install only what you use.
 Cursor plugin bundling:
 
 - Hooks: `sessionStart`, `stop`, `subagentStart`, `subagentStop`, `preCompact`, `sessionEnd`
-- Scripts: `log-usage.py`, `project-report.py`, `summarize.py`
+- Scripts: `log-usage.py`, `project-report.py`, `summarize.py`, `report-usage.py`
 - Skill: `session-usage` (`/session-usage`) for refreshing/opening reports
 
-Install: Cursor Marketplace / Customize, or local plugin link from `cursor/`.
-
-Migrating from the old user-level hook install: remove `./hooks/log-usage.py` entries from `~/.cursor/hooks.json` so sessions are not double-logged.
+Install: Cursor Marketplace / Customize, or a real copy of `cursor/` into `~/.cursor/plugins/local/session-usage`.
 
 ## Claude Code package (`claude-code/`)
 
