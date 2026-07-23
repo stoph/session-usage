@@ -5,5 +5,7 @@
   "author": {
     "name": "Christoph"
   },
+  "license": "MIT",
+  "repository": "https://github.com/stoph/session-usage",
   "keywords": ["usage", "tokens", "hooks", "report"]
 }

@@ -85,3 +85,7 @@ Details: [claude-code/README.md](claude-code/README.md).
 ## Spec
 
 [docs/specs/session-usage.md](docs/specs/session-usage.md)
+
+## License
+
+[MIT](LICENSE)
