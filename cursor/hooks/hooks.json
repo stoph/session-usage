@@ -1,33 +1,34 @@
 {
+  "version": 1,
   "hooks": {
     "sessionStart": [
       {
-        "command": "./scripts/log-usage.py"
+        "command": "${CURSOR_PLUGIN_ROOT}/scripts/log-usage.py"
       }
     ],
     "stop": [
       {
-        "command": "./scripts/log-usage.py"
+        "command": "${CURSOR_PLUGIN_ROOT}/scripts/log-usage.py"
       }
     ],
     "subagentStart": [
       {
-        "command": "./scripts/log-usage.py"
+        "command": "${CURSOR_PLUGIN_ROOT}/scripts/log-usage.py"
       }
     ],
     "subagentStop": [
       {
-        "command": "./scripts/log-usage.py"
+        "command": "${CURSOR_PLUGIN_ROOT}/scripts/log-usage.py"
       }
     ],
     "preCompact": [
       {
-        "command": "./scripts/log-usage.py"
+        "command": "${CURSOR_PLUGIN_ROOT}/scripts/log-usage.py"
       }
     ],
     "sessionEnd": [
       {
-        "command": "./scripts/log-usage.py"
+        "command": "${CURSOR_PLUGIN_ROOT}/scripts/log-usage.py"
       }
     ]
   }

@@ -12,12 +12,15 @@ Documented Cursor path for loading a plugin that is not on the public Marketplac
 
 ```bash
 mkdir -p ~/.cursor/plugins/local
-ln -sfn /path/to/session-usage/cursor ~/.cursor/plugins/local/session-usage
+rm -rf ~/.cursor/plugins/local/session-usage
+cp -R /path/to/session-usage/cursor ~/.cursor/plugins/local/session-usage
 ```
+
+Cursor rejects symlinks whose target is outside `~/.cursor/plugins/local/`. Use a real copy.
 
 Fully quit and reopen Cursor (or Developer: Reload Window). Check **Customize**, run an agent turn, confirm `<project>/.cursor/usage-logs/`, then `/session-usage`.
 
-Updates: `git pull` in the clone, then reload.
+Updates: `git pull` in the clone, re-copy `cursor/` into `~/.cursor/plugins/local/session-usage`, then reload.
 
 To publish for anyone: [cursor.com/marketplace/publish](https://cursor.com/marketplace/publish).
 

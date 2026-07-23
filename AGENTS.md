@@ -16,7 +16,7 @@ Two independent plugins in one git repo. **Never** share runtime, log dirs, or a
 ## Hard rules
 
 - **Project-only logs.** Cursor → `<workspace>/.cursor/usage-logs/`. Claude → `<project>/.claude/usage-logs/`. No workspace/project root → do not write. **No** `~/.cursor/hooks/logs` (or any user-home JSONL fallback).
-- **Do not install onto the user’s machine** (no `~/.cursor/plugins/local` or `~/.claude/skills` symlinks) unless they explicitly ask.
+- **Do not install onto the user’s machine** (no `~/.cursor/plugins/local` copies or `~/.claude/skills` symlinks) unless they explicitly ask.
 - **Do not invent token numbers.** Reports come from `project-report.py` / `summarize.py` only. HTML is self-contained (embedded JSON); do not hand-author `report.html`.
 - Display columns: **Input** (`fresh_tokens`), **Cache write**, **Cache read**, **Prompt total** (`input_tokens`), **Output**. Cost math uses the four priced lines, not Prompt total twice.
 
@@ -31,7 +31,7 @@ Two independent plugins in one git repo. **Never** share runtime, log dirs, or a
 | Skill UX | `cursor/skills/session-usage/SKILL.md` | `claude-code/skills/session-usage/SKILL.md` |
 | Manifest | `cursor/.cursor-plugin/plugin.json` | `claude-code/.claude-plugin/plugin.json` |
 
-Cursor hooks use relative `./scripts/log-usage.py`. Claude hooks use `${CLAUDE_PLUGIN_ROOT}/scripts/log-usage.py` and must keep the nested `hooks` → `hooks` → `{type:command}` shape.
+Cursor hooks use `${CURSOR_PLUGIN_ROOT}/scripts/log-usage.py` (cwd can be the project root on some events). Claude hooks use `${CLAUDE_PLUGIN_ROOT}/scripts/log-usage.py` and must keep the nested `hooks` → `hooks` → `{type:command}` shape.
 
 ## Token sources
 
@@ -40,7 +40,7 @@ Cursor hooks use relative `./scripts/log-usage.py`. Claude hooks use `${CLAUDE_P
 
 ## Install truth (do not confuse these)
 
-- **Cursor individuals:** `~/.cursor/plugins/local/session-usage` → clone’s `cursor/` (documented local plugin path). No personal git-marketplace import.
+- **Cursor individuals:** real copy of `cursor/` into `~/.cursor/plugins/local/session-usage` (Cursor rejects symlinks that point outside that directory). No personal git-marketplace import.
 - **Cursor Teams/Enterprise:** Team Marketplace import of this GitHub repo.
 - **Cursor public:** `cursor.com/marketplace/publish` (review).
 - **Claude anyone:** `claude plugin marketplace add <repo-or-path>` then `claude plugin install session-usage@session-usage`. Validate with `claude plugin validate`.
@@ -57,7 +57,5 @@ python3 -m py_compile cursor/scripts/*.py claude-code/scripts/*.py
 
 ## Known pitfalls
 
-- Old user-level `~/.cursor/hooks/log-usage.py` wrote `sessions-index.jsonl` under `~/.cursor/hooks/logs/`. New loggers must not. Double-logging if that entry remains in `~/.cursor/hooks.json`.
 - Claude first `Stop` on a long existing transcript can attribute full history to one turn (delta from empty state).
 - Claude `SessionEnd` timeouts are tight; HTML refresh also runs on `Stop`.
-- Reporter changes must be applied **per package** (no shared module).

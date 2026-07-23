@@ -27,15 +27,18 @@ This is the supported way to run a plugin that is not on the public Cursor Marke
 git clone https://github.com/stoph/session-usage.git
 # or use an existing checkout
 mkdir -p ~/.cursor/plugins/local
-ln -sfn /path/to/session-usage/cursor ~/.cursor/plugins/local/session-usage
+rm -rf ~/.cursor/plugins/local/session-usage
+cp -R /path/to/session-usage/cursor ~/.cursor/plugins/local/session-usage
 ```
+
+Cursor rejects symlinks whose target is outside `~/.cursor/plugins/local/`. Use a real copy.
 
 1. Fully quit and reopen Cursor (or Developer: Reload Window).
 2. Confirm the plugin appears under **Customize**.
 3. Run an agent turn in a project → `<project>/.cursor/usage-logs/`.
 4. `/session-usage` to open the report.
 
-Updates: `git pull` in the clone, then reload Cursor.
+Updates: `git pull` in the clone, then re-copy `cursor/` into `~/.cursor/plugins/local/session-usage` and reload Cursor.
 
 Public distribution for strangers: [cursor.com/marketplace/publish](https://cursor.com/marketplace/publish) (manual review).
 
